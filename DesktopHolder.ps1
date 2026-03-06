@@ -344,18 +344,67 @@ function Load-Data {
         Title="DeskTopHolder"
         Width="960"
         Height="640"
-        ResizeMode="CanResizeWithGrip"
+        ResizeMode="NoResize"
         Background="Transparent"
         WindowStartupLocation="CenterScreen"
         Topmost="True"
-        AllowsTransparency="False">
+        AllowsTransparency="True"
+        WindowStyle="None">
+    <Window.Resources>
+        <Style x:Key="FlatButtonStyle" TargetType="Button">
+            <Setter Property="Foreground" Value="#EAF0F7"/>
+            <Setter Property="Background" Value="#2F3742"/>
+            <Setter Property="BorderBrush" Value="#465364"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="12,6"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bd"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="7"
+                                SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#3A4657"/>
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="#60728A"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#26303C"/>
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="#516077"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Bd" Property="Opacity" Value="0.55"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <DockPanel Background="Transparent">
-        <Border DockPanel.Dock="Top" Background="#2A2A30" Padding="10">
-            <StackPanel Orientation="Horizontal">
-                <Button x:Name="BtnAdd" Width="90" Height="30" Content="新建" Margin="0,0,8,0"/>
-                <Button x:Name="BtnToggleCanvas" Width="90" Height="30" Content="折叠画布" Margin="0,0,8,0"/>
-                <TextBlock Text="拖入创建快捷方式；单击打开；右键图标可删除；按住中键拖动画布。" VerticalAlignment="Center" Foreground="#E6E6E6"/>
-            </StackPanel>
+        <Border x:Name="TopBar" DockPanel.Dock="Top" Background="#CC2A2A30" Padding="10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal" Grid.Column="0">
+                    <Button x:Name="BtnAdd" Width="92" Height="32" Content="新建" Margin="0,0,8,0" Style="{StaticResource FlatButtonStyle}"/>
+                    <Button x:Name="BtnToggleCanvas" Width="92" Height="32" Content="折叠画布" Margin="0,0,8,0" Style="{StaticResource FlatButtonStyle}"/>
+                    <TextBlock Text="拖入创建快捷方式；单击打开；右键图标可删除；按住中键拖动画布。" VerticalAlignment="Center" Foreground="#E6E6E6"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Grid.Column="1">
+                    <Button x:Name="BtnMin" Width="34" Height="30" Content="-" Margin="8,0,6,0" Style="{StaticResource FlatButtonStyle}"/>
+                    <Button x:Name="BtnClose" Width="34" Height="30" Content="×" Style="{StaticResource FlatButtonStyle}"/>
+                </StackPanel>
+            </Grid>
         </Border>
         <Border x:Name="CanvasHost"
                 Margin="10"
@@ -364,7 +413,7 @@ function Load-Data {
                 Background="#4420262E"
                 BorderBrush="#88A8B3C2"
                 BorderThickness="1">
-            <ScrollViewer x:Name="MainScrollViewer" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Background="Transparent">
+            <ScrollViewer x:Name="MainScrollViewer" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" Background="Transparent" PanningMode="Both">
                 <Canvas x:Name="ShortcutCanvas" AllowDrop="True" Width="3000" Height="2000" Background="Transparent"/>
             </ScrollViewer>
         </Border>
@@ -377,9 +426,12 @@ $Window = [Windows.Markup.XamlReader]::Load($reader)
 
 $script:ShortcutCanvas = $Window.FindName('ShortcutCanvas')
 $script:MainScrollViewer = $Window.FindName('MainScrollViewer')
+$TopBar = $Window.FindName('TopBar')
 $CanvasHost = $Window.FindName('CanvasHost')
 $BtnAdd = $Window.FindName('BtnAdd')
 $BtnToggleCanvas = $Window.FindName('BtnToggleCanvas')
+$BtnMin = $Window.FindName('BtnMin')
+$BtnClose = $Window.FindName('BtnClose')
 $script:ExpandedHeight = $Window.Height
 
 $script:ShortcutCanvas.Add_DragEnter({
@@ -430,6 +482,20 @@ $BtnToggleCanvas.Add_Click({
         }
         $BtnToggleCanvas.Content = '折叠画布'
     }
+})
+
+$TopBar.Add_MouseLeftButtonDown({
+    param($sender, $e)
+    if ($e.ButtonState -ne [System.Windows.Input.MouseButtonState]::Pressed) { return }
+    $Window.DragMove()
+})
+
+$BtnMin.Add_Click({
+    $Window.WindowState = [System.Windows.WindowState]::Minimized
+})
+
+$BtnClose.Add_Click({
+    $Window.Close()
 })
 
 $Window.Add_PreviewMouseDown({
