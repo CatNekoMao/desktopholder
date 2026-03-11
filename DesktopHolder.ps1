@@ -353,8 +353,8 @@ function Load-Data {
     <Window.Resources>
         <Style x:Key="FlatButtonStyle" TargetType="Button">
             <Setter Property="Foreground" Value="#EAF0F7"/>
-            <Setter Property="Background" Value="#2F3742"/>
-            <Setter Property="BorderBrush" Value="#465364"/>
+            <Setter Property="Background" Value="#B8323B47"/>
+            <Setter Property="BorderBrush" Value="#8F6B7B90"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Padding" Value="12,6"/>
             <Setter Property="FontSize" Value="13"/>
@@ -372,12 +372,12 @@ function Load-Data {
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Bd" Property="Background" Value="#3A4657"/>
-                                <Setter TargetName="Bd" Property="BorderBrush" Value="#60728A"/>
+                                <Setter TargetName="Bd" Property="Background" Value="#D63E4B5B"/>
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="#A27E93AB"/>
                             </Trigger>
                             <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="Bd" Property="Background" Value="#26303C"/>
-                                <Setter TargetName="Bd" Property="BorderBrush" Value="#516077"/>
+                                <Setter TargetName="Bd" Property="Background" Value="#E028313D"/>
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="#8F607189"/>
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter TargetName="Bd" Property="Opacity" Value="0.55"/>
@@ -389,7 +389,10 @@ function Load-Data {
         </Style>
     </Window.Resources>
     <DockPanel Background="Transparent">
-        <Border x:Name="TopBar" DockPanel.Dock="Top" Background="#CC2A2A30" Padding="10">
+        <Border x:Name="TopBar" DockPanel.Dock="Top" Background="#DD1F252D" Padding="10" BorderBrush="#55F7FBFF" BorderThickness="1" CornerRadius="12" Margin="10,10,10,0">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="18" ShadowDepth="0" Color="#AA000000" Opacity="0.45"/>
+            </Border.Effect>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -410,9 +413,12 @@ function Load-Data {
                 Margin="10"
                 CornerRadius="12"
                 Padding="6"
-                Background="#4420262E"
-                BorderBrush="#88A8B3C2"
+                Background="#B3202831"
+                BorderBrush="#66F4F8FF"
                 BorderThickness="1">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="28" ShadowDepth="0" Color="#C0000000" Opacity="0.42"/>
+            </Border.Effect>
             <ScrollViewer x:Name="MainScrollViewer" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" Background="Transparent" PanningMode="Both">
                 <Canvas x:Name="ShortcutCanvas" AllowDrop="True" Width="3000" Height="2000" Background="Transparent"/>
             </ScrollViewer>
