@@ -1,5 +1,42 @@
-﻿{
-    "path":  "E:\\Project\\JupiterEngine\\Engine\\Jupiter System Enterprise Edition Build 69\\Samples\\networking\\sealhunter",
-    "x":  7,
-    "y":  7
-}
+﻿[
+    {
+        "path":  "E:\\Project\\JupiterEngine\\Engine\\Jupiter System Enterprise Edition Build 69\\Samples\\networking\\sealhunter",
+        "x":  7,
+        "y":  7
+    },
+    {
+        "path":  "E:\\Project\\JupiterEngine\\Engine\\Jupiter System Enterprise Edition Build 69\\Tools\\dedit.exe",
+        "x":  204,
+        "y":  6
+    },
+    {
+        "path":  "E:\\Project\\JupiterEngine\\Engine\\Jupiter System Enterprise Edition Build 69\\Tools\\ModelEdit.exe",
+        "x":  333,
+        "y":  2
+    },
+    {
+        "path":  "E:\\Project\\JupiterEngine\\DDC\\mayatojupiter\\cf_ue",
+        "x":  19,
+        "y":  133
+    },
+    {
+        "path":  "E:\\Project\\JupiterEngine\\DDC\\Maya7.0\\2.启动 Maya.bat",
+        "x":  457,
+        "y":  0
+    },
+    {
+        "path":  "E:\\Project\\JupiterEngine\\DDC\\mayatojupiter",
+        "x":  453,
+        "y":  126
+    },
+    {
+        "path":  "C:\\Users\\Public\\Desktop\\Autodesk 3ds Max 2012 32-bit - Simplified Chinese.lnk",
+        "x":  205,
+        "y":  252
+    },
+    {
+        "path":  "E:\\Program\\3dsmax2012x86\\3ds Max 2012",
+        "x":  209,
+        "y":  136
+    }
+]
